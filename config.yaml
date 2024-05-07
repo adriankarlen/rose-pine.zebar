@@ -1,0 +1,261 @@
+###
+# Settings to apply to all windows.
+#
+# Docs regarding global: https://some-future-docs-link.com
+global:
+  # Whether to enable the browser devtools.
+  enable_devtools: true
+
+###
+# Define a new window with an id of 'bar'. This window can then be opened
+# via the Zebar cli by running 'zebar open bar'.
+#
+# Docs regarding window: https://some-future-docs-link.com
+window/bar:
+  providers: ['self']
+  # Width of the window in physical pixels.
+  width: '{{ self.args.MONITOR_WIDTH }}'
+  # Height of the window in physical pixels.
+  height: '65'
+  # X-position of the window in physical pixels.
+  position_x: '{{ self.args.MONITOR_X }}'
+  # Y-position of the window in physical pixels.
+  position_y: '{{ self.args.MONITOR_Y }}'
+  # Whether to show the window above/below all others.
+  # Allowed values: 'always_on_top', 'always_on_bottom', 'normal'.
+  z_order: 'always_on_bottom'
+  # Whether the window should be shown in the taskbar.
+  show_in_taskbar: false
+  # Whether the window should have resize handles.
+  resizable: false
+  # Styles to apply globally within the window. For example, we can use
+  # this to import the Nerdfonts icon font. Ref https://www.nerdfonts.com/cheat-sheet
+  # for a cheatsheet of available Nerdfonts icons.
+  global_styles: |
+    @import "https://www.nerdfonts.com/assets/css/webfont.css";
+
+    :root {
+      --rp-base: #191724;
+      --rp-base-alpha-bg: #191724DD;
+      --rp-surface: #1f1d2e;
+      --rp-overlay: #26233a;
+      --rp-muted: #6e6a86;
+      --rp-subtle: #908caa;
+      --rp-text: #e0def4;
+      --rp-love: #eb6f92;
+      --rp-gold: #f6c177;
+      --rp-rose: #ebbcba;
+      --rp-pine: #31748f;
+      --rp-foam: #9ccfd8;
+      --rp-iris: #c4a7e7;
+      --rp-highlight-low: #21202e;
+      --rp-highlight-med: #403d52;
+      --rp-highlight-high: #524f67;
+    }
+
+  # CSS/SCSS styles to apply to the root element within the window.
+  styles: |
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    height: 40px;
+    margin: 10px 20px;
+    color: var(--rp-text);
+    font-family: "Cartograph CF", ui-monospace, monospace;
+    font-size: 16px;
+    font-weight: 600;
+
+  group/left:
+    styles: |
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--rp-base-alpha-bg);
+      border: 1px solid var(--rp-base);
+      border-radius: 9999px;
+      height: 40px; 
+      width: fit-content;
+
+      .template {
+        margin: 4px;
+        display: flex;
+        align-items: center;
+      }
+
+      #memory, #cpu, #battery {
+        background: color-mix(in srgb, currentColor 10%, transparent);
+        border-radius: 9999px;
+        padding: 6px;
+        i {
+          margin-right: 7px;
+        }
+      }
+
+    template/rose-pine:
+      styles: |
+        color: var(--rp-love);
+        background: color-mix(in srgb, currentColor 10%, transparent);
+        padding: 6px;
+        border-radius: 9999px
+      template: |
+        <i class="nf nf-md-flower_tulip"></i>
+
+    template/memory:
+      providers: ['memory']
+      styles: |
+        color: var(--rp-iris);
+      template: |
+        <i class="nf nf-fa-rocket"></i>
+        {{ (memory.usedMemory / 1000000000).toFixed(2) }} GiB
+
+    template/cpu:
+      providers: ['cpu']
+      styles: |
+        color: var(--rp-rose);
+
+        .high-usage {
+          color: var(--rp-love);
+        }
+      template: |
+        <div class={{cpu.usage > 85 && 'high-usage'}}>
+          <i class="nf nf-oct-cpu"></i>
+          <span>{{ Math.round(cpu.usage) }}%</span>
+        </div>
+
+    template/battery:
+      providers: ['battery']
+      styles: |
+        color: var(--rp-foam);
+
+      template: |
+        <!-- Show icon for how much of the battery is charged. -->
+        @if (battery.chargePercent > 90) {<i class="nf nf-fa-battery_4"></i>}
+        @else if (battery.chargePercent > 70) {<i class="nf nf-fa-battery_3"></i>}
+        @else if (battery.chargePercent > 40) {<i class="nf nf-fa-battery_2"></i>}
+        @else if (battery.chargePercent > 20) {<i class="nf nf-fa-battery_1"></i>}
+        @else {<i class="nf nf-fa-battery_0"></i>}
+
+        {{ Math.round(battery.chargePercent) }}%
+
+  group/center:
+    styles: |
+      justify-self: center;
+
+    template/komorebi:
+      styles: |
+        height: 40px;
+        display: flex;
+        align-items: center;
+        background: var(--rp-base-alpha-bg);
+        border: 1px solid var(--rp-base);
+        border-radius: 9999px;
+        font-weight: 1000;
+
+        .workspace {
+          background:transparent;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 4px;
+        }
+
+        i {
+          padding: 8px;
+          background: color-mix(in srgb, currentColor 10%, transparent);
+          border-radius: 9999px;
+        }      
+
+        button:nth-child(6n+1) i {
+          color: var(--rp-love);
+        }
+
+        button:nth-child(6n+2) i {
+          color: var(--rp-gold);
+        }
+
+        button:nth-child(6n+3) i {
+          color: var(--rp-rose);
+        }
+
+        button:nth-child(6n+4) i {
+          color: var(--rp-pine);
+        }
+        
+        button:nth-child(6n+5) i {
+          color: var(--rp-foam);
+        }
+
+        button:nth-child(6n+6) i {
+          color: var(--rp-iris);
+        }
+
+      providers: ['komorebi']
+      template: |
+        @for (workspace of komorebi.currentMonitor.workspaces) {
+          <button class="workspace">
+            <i class="nf {{ workspace === komorebi.focusedWorkspace ? 'nf-fa-circle' : 'nf-fa-circle_o' }}"></i>
+          </button>
+        }
+
+  group/right:
+    styles: |
+      justify-self: end;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      background: var(--rp-base-alpha-bg);
+      border: 1px solid var(--rp-base);
+      border-radius: 9999px;
+
+      .template {
+        margin: 4px;
+        display: flex;
+        align-items: center;
+      }
+      
+      #weather {
+        background: color-mix(in srgb, currentColor 10%, transparent);
+        border-radius: 9999px;
+        padding: 6px;
+        i {
+          margin-right: 7px;
+        }
+      }
+      
+    template/weather:
+      providers: ['weather']
+      styles: |
+        margin: 10px;
+        i {
+          font-size: 20px;
+        }
+        color: var(--rp-gold);
+      template: |
+        @switch (weather.status) {
+          @case ('clear_day') {<i class="nf nf-weather-day_sunny"></i>}
+          @case ('clear_night') {<i class="nf nf-weather-night_clear"></i>}
+          @case ('cloudy_day') {<i class="nf nf-weather-day_cloudy"></i>}
+          @case ('cloudy_night') {<i class="nf nf-weather-night_alt_cloudy"></i>}
+          @case ('light_rain_day') {<i class="nf nf-weather-day_sprinkle"></i>}
+          @case ('light_rain_night') {<i class="nf nf-weather-night_alt_sprinkle"></i>}
+          @case ('heavy_rain_day') {<i class="nf nf-weather-day_rain"></i>}
+          @case ('heavy_rain_night') {<i class="nf nf-weather-night_alt_rain"></i>}
+          @case ('snow_day') {<i class="nf nf-weather-day_snow"></i>}
+          @case ('snow_night') {<i class="nf nf-weather-night_alt_snow"></i>}
+          @case ('thunder_day') {<i class="nf nf-weather-day_lightning"></i>}
+          @case ('thunder_night') {<i class="nf nf-weather-night_alt_lightning"></i>}
+        }
+        {{ weather.celsiusTemp }}°
+
+    template/separator:
+      styles: |
+      template: |
+        <i class="nf nf-oct-dot_fill"></>
+
+    template/clock:
+      providers: ['date']
+      styles: |
+        padding-right: 6px;
+      template: |
+        {{ date.toFormat(date.now, 't') }}
