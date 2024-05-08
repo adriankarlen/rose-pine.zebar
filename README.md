@@ -2,7 +2,7 @@
 
 ## Usage
 
-> NOTE: It replace font with your desired font, I am using Cartograph CF in the picture
+> NOTE: Replace font with your desired font, I am using Cartograph CF in the picture
 
 ## 📷
 
