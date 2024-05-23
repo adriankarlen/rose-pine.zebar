@@ -12,18 +12,18 @@ global:
 #
 # Docs regarding window: https://some-future-docs-link.com
 window/bar:
-  providers: ['self']
+  providers: ["self"]
   # Width of the window in physical pixels.
-  width: '{{ self.args.MONITOR_WIDTH }}'
+  width: "{{ self.args.MONITOR_WIDTH }}"
   # Height of the window in physical pixels.
-  height: '65'
+  height: "65"
   # X-position of the window in physical pixels.
-  position_x: '{{ self.args.MONITOR_X }}'
+  position_x: "{{ self.args.MONITOR_X }}"
   # Y-position of the window in physical pixels.
-  position_y: '{{ self.args.MONITOR_Y }}'
+  position_y: "{{ self.args.MONITOR_Y }}"
   # Whether to show the window above/below all others.
   # Allowed values: 'always_on_top', 'always_on_bottom', 'normal'.
-  z_order: 'always_on_bottom'
+  z_order: "always_on_bottom"
   # Whether the window should be shown in the taskbar.
   show_in_taskbar: false
   # Whether the window should have resize handles.
@@ -101,7 +101,7 @@ window/bar:
         <i class="nf nf-md-flower_tulip"></i>
 
     template/memory:
-      providers: ['memory']
+      providers: ["memory"]
       styles: |
         color: var(--rp-iris);
       template: |
@@ -109,7 +109,7 @@ window/bar:
         {{ (memory.usedMemory / 1000000000).toFixed(2) }} GiB
 
     template/cpu:
-      providers: ['cpu']
+      providers: ["cpu"]
       styles: |
         color: var(--rp-rose);
 
@@ -123,7 +123,7 @@ window/bar:
         </div>
 
     template/battery:
-      providers: ['battery']
+      providers: ["battery"]
       styles: |
         color: var(--rp-foam);
 
@@ -181,7 +181,7 @@ window/bar:
         button:nth-child(6n+4) i {
           color: var(--rp-pine);
         }
-        
+
         button:nth-child(6n+5) i {
           color: var(--rp-foam);
         }
@@ -190,11 +190,11 @@ window/bar:
           color: var(--rp-iris);
         }
 
-      providers: ['komorebi']
+      providers: ["komorebi"]
       template: |
         @for (workspace of komorebi.currentMonitor.workspaces) {
           <button class="workspace">
-            <i class="nf {{ workspace === komorebi.focusedWorkspace ? 'nf-fa-circle' : 'nf-fa-circle_o' }}"></i>
+            <i class="nf {{ workspace === komorebi.focusedWorkspace ? 'nf-cod-circle_filled' : 'nf-cod-circle' }}"></i>
           </button>
         }
 
@@ -213,7 +213,7 @@ window/bar:
         display: flex;
         align-items: center;
       }
-      
+
       #weather {
         background: color-mix(in srgb, currentColor 10%, transparent);
         border-radius: 9999px;
@@ -222,9 +222,9 @@ window/bar:
           margin-right: 7px;
         }
       }
-      
+
     template/weather:
-      providers: ['weather']
+      providers: ["weather"]
       styles: |
         margin: 10px;
         i {
@@ -254,7 +254,7 @@ window/bar:
         <i class="nf nf-oct-dot_fill"></>
 
     template/clock:
-      providers: ['date']
+      providers: ["date"]
       styles: |
         padding-right: 6px;
       template: |

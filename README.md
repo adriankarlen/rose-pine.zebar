@@ -7,4 +7,3 @@
 ## 📷
 
 ![image](https://raw.githubusercontent.com/adriankarlen/zebar/main/misc/preview.png)
-
