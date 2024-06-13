@@ -33,6 +33,7 @@ window/bar:
   # for a cheatsheet of available Nerdfonts icons.
   global_styles: |
     @import "https://www.nerdfonts.com/assets/css/webfont.css";
+    @import "https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css";
 
     :root {
       --rp-base: #191724;
@@ -87,6 +88,7 @@ window/bar:
         border-radius: 9999px;
         padding: 6px;
         i {
+          font-size: 20px;
           margin-right: 7px;
         }
       }
@@ -105,7 +107,7 @@ window/bar:
       styles: |
         color: var(--rp-iris);
       template: |
-        <i class="nf nf-fa-rocket"></i>
+        <i class="ti ti-rocket"></i>
         {{ (memory.usedMemory / 1000000000).toFixed(2) }} GiB
 
     template/cpu:
@@ -118,7 +120,7 @@ window/bar:
         }
       template: |
         <div class={{cpu.usage > 85 && 'high-usage'}}>
-          <i class="nf nf-oct-cpu"></i>
+          <i class="ti ti-cpu"></i>
           <span>{{ Math.round(cpu.usage) }}%</span>
         </div>
 
@@ -128,13 +130,7 @@ window/bar:
         color: var(--rp-foam);
 
       template: |
-        <!-- Show icon for how much of the battery is charged. -->
-        @if (battery.chargePercent > 90) {<i class="nf nf-fa-battery_4"></i>}
-        @else if (battery.chargePercent > 70) {<i class="nf nf-fa-battery_3"></i>}
-        @else if (battery.chargePercent > 40) {<i class="nf nf-fa-battery_2"></i>}
-        @else if (battery.chargePercent > 20) {<i class="nf nf-fa-battery_1"></i>}
-        @else {<i class="nf nf-fa-battery_0"></i>}
-
+        <i class="ti ti-bolt"></i> 
         {{ Math.round(battery.chargePercent) }}%
 
   group/center:
