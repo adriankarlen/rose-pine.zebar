@@ -16,7 +16,7 @@ window/bar:
 
     :root {
       --rp-base: #191724;
-      --rp-base-alpha-bg: #191724DD;
+      --rp-base-alpha-bg: #191724dd;
       --rp-surface: #1f1d2e;
       --rp-overlay: #26233a;
       --rp-muted: #6e6a86;
@@ -31,6 +31,56 @@ window/bar:
       --rp-highlight-low: #21202e;
       --rp-highlight-med: #403d52;
       --rp-highlight-high: #524f67;
+
+      --rp-moon-base: #232136;
+      --rp-moon-base-alpha-bg: #232136dd;
+      --rp-moon-surface: #2a273f;
+      --rp-moon-overlay: #393552;
+      --rp-moon-muted: #6e6a86;
+      --rp-moon-subtle: #908caa;
+      --rp-moon-text: #e0def4;
+      --rp-moon-love: #eb6f92;
+      --rp-moon-gold: #f6c177;
+      --rp-moon-rose: #ea9a97;
+      --rp-moon-pine: #3e8fb0;
+      --rp-moon-foam: #9ccfd8;
+      --rp-moon-iris: #c4a7e7;
+      --rp-moon-highlight-low: #2a283e;
+      --rp-moon-highlight-med: #44415a;
+      --rp-moon-highlight-high: #56526e;
+
+      --rp-dawn-base: #faf4ed;
+      --rp-dawn-base-alpha-bg: #faf4eddd
+      --rp-dawn-surface: #fffaf3;
+      --rp-dawn-overlay: #f2e9e1;
+      --rp-dawn-muted: #9893a5;
+      --rp-dawn-subtle: #797593;
+      --rp-dawn-text: #575279;
+      --rp-dawn-love: #b4637a;
+      --rp-dawn-gold: #ea9d34;
+      --rp-dawn-rose: #d7827e;
+      --rp-dawn-pine: #286983;
+      --rp-dawn-foam: #56949f;
+      --rp-dawn-iris: #907aa9;
+      --rp-dawn-highlight-low: #f4ede8;
+      --rp-dawn-highlight-med: #dfdad9;
+      --rp-dawn-highlight-high: #cecacd;
+
+      --text: var(--rp-text);
+      --bg: var(--rp-base-alpha-bg);
+      --border: var(--rp-base);
+      --icon: var(--rp-love);
+      --memory: var(--rp-iris);
+      --cpu: var(--rp-rose);
+      --cpu-high-usage: var(--rp-love);
+      --battery: var(--rp-foam);
+      --ws-1: var(--rp-love);
+      --ws-2: var(--rp-gold);
+      --ws-3: var(--rp-rose);
+      --ws-4: var(--rp-pine);
+      --ws-5: var(--rp-foam);
+      --ws-6: var(--rp-iris);
+      --weather: var(--rp-gold);
     }
 
   styles: |
@@ -39,7 +89,7 @@ window/bar:
     align-items: center;
     height: 40px;
     margin: 10px 20px;
-    color: var(--rp-text);
+    color: var(--text);
     font-family: "SF Mono", ui-monospace, monospace;
     font-size: 16px;
     font-weight: 600;
@@ -49,8 +99,8 @@ window/bar:
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--rp-base-alpha-bg);
-      border: 1px solid var(--rp-base);
+      background: var(--bg);
+      border: 1px solid var(--border);
       border-radius: 9999px;
       height: 40px; 
       width: fit-content;
@@ -73,7 +123,7 @@ window/bar:
 
     template/rose-pine:
       styles: |
-        color: var(--rp-love);
+        color: var(--icon);
         background: color-mix(in srgb, currentColor 10%, transparent);
         padding: 6px;
         border-radius: 9999px
@@ -83,7 +133,7 @@ window/bar:
     template/memory:
       providers: ["memory"]
       styles: |
-        color: var(--rp-iris);
+        color: var(--memory);
       template: |
         <i class="ti ti-rocket"></i>
         {{ (memory.usedMemory / 1000000000).toFixed(2) }} GiB
@@ -91,10 +141,10 @@ window/bar:
     template/cpu:
       providers: ["cpu"]
       styles: |
-        color: var(--rp-rose);
+        color: var(--cpu);
 
         .high-usage {
-          color: var(--rp-love);
+          color: var(--cou-high-use);
         }
       template: |
         <div class={{cpu.usage > 85 && 'high-usage'}}>
@@ -105,7 +155,7 @@ window/bar:
     template/battery:
       providers: ["battery"]
       styles: |
-        color: var(--rp-foam);
+        color: var(--battery);
 
       template: |
         <i class="ti ti-bolt"></i> 
@@ -120,8 +170,8 @@ window/bar:
         height: 40px;
         display: flex;
         align-items: center;
-        background: var(--rp-base-alpha-bg);
-        border: 1px solid var(--rp-base);
+        background: var(--bg);
+        border: 1px solid var(--border);
         border-radius: 9999px;
         font-weight: 1000;
 
@@ -141,27 +191,27 @@ window/bar:
         }      
 
         button:nth-child(6n+1) i {
-          color: var(--rp-love);
+          color: var(--ws-1);
         }
 
         button:nth-child(6n+2) i {
-          color: var(--rp-gold);
+          color: var(--ws-2);
         }
 
         button:nth-child(6n+3) i {
-          color: var(--rp-rose);
+          color: var(--ws-3);
         }
 
         button:nth-child(6n+4) i {
-          color: var(--rp-pine);
+          color: var(--ws-4);
         }
 
         button:nth-child(6n+5) i {
-          color: var(--rp-foam);
+          color: var(--ws-5);
         }
 
         button:nth-child(6n+6) i {
-          color: var(--rp-iris);
+          color: var(--ws-6);
         }
 
       providers: ["komorebi"]
@@ -178,8 +228,8 @@ window/bar:
       height: 40px;
       display: flex;
       align-items: center;
-      background: var(--rp-base-alpha-bg);
-      border: 1px solid var(--rp-base);
+      background: var(--bg);
+      border: 1px solid var(--border);
       border-radius: 9999px;
 
       .template {
@@ -204,7 +254,7 @@ window/bar:
         i {
           font-size: 20px;
         }
-        color: var(--rp-gold);
+        color: var(--weather);
       template: |
         @switch (weather.status) {
           @case ('clear_day') {<i class="nf nf-weather-day_sunny"></i>}
@@ -233,4 +283,3 @@ window/bar:
         padding-right: 6px;
       template: |
         {{ date.toFormat(date.now, 't') }}
-       {{ date.toFormat(date.now, 't') }}
