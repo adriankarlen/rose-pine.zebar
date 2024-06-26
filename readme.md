@@ -17,6 +17,27 @@
 > The height of the window is a bit wonky with Windows zoom levels. So play
 > around with it to make it work for you.
 
+In `config.yaml` replace the following section with your desired variables, eg.
+main, moon or dawn, defaults to main. Colors are also configurable.
+
+```css
+--text: var(--rp-text);
+--bg: var(--rp-base-alpha-bg);
+--border: var(--rp-base);
+--icon: var(--rp-love);
+--memory: var(--rp-iris);
+--cpu: var(--rp-rose);
+--cpu-high-usage: var(--rp-love);
+--battery: var(--rp-foam);
+--ws-1: var(--rp-love);
+--ws-2: var(--rp-gold);
+--ws-3: var(--rp-rose);
+--ws-4: var(--rp-pine);
+--ws-5: var(--rp-foam);
+--ws-6: var(--rp-iris);
+--weather: var(--rp-gold);
+```
+
 ## Gallery
 
 ![image](https://raw.githubusercontent.com/adriankarlen/rose-pine.zebar/main/misc/bar.png)
