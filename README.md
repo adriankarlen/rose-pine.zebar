@@ -2,7 +2,9 @@
 
 ## Usage
 
-> NOTE: Replace font with your desired font, I am using Cartograph CF in the picture
+> NOTE: Replace font with your desired font, I am using SF Mono in the picture.
+> The height of the window is a bit wonky with Windows zoom levels. So play
+> around with it to make it work for you.
 
 ## 📷
 
