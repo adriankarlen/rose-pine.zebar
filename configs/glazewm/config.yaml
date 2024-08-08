@@ -4,7 +4,7 @@ global:
 window/bar:
   providers: ["self"]
   width: "{{ self.args.MONITOR_WIDTH }}"
-  height: "75" #This one is a bit funky, I am using a 4k monitor with 150% zoom, this precisely fits that
+  height: "60" #This one is a bit funky, if you are using scaling, adjust accordingly
   position_x: "{{ self.args.MONITOR_X }}"
   position_y: "{{ self.args.MONITOR_Y }}"
   z_order: "always_on_bottom"
@@ -214,11 +214,15 @@ window/bar:
           color: var(--ws-6);
         }
 
-      providers: ["komorebi"]
+      providers: ["glazewm"]
+      events:
+        - type: "click"
+          fn_path: "script.js#focusWorkspace"
+          selector: ".workspace"
       template: |
-        @for (workspace of komorebi.currentMonitor.workspaces) {
-          <button class="workspace">
-            <i class="nf {{ workspace === komorebi.focusedWorkspace ? 'nf-cod-circle_filled' : 'nf-cod-circle' }}"></i>
+        @for (workspace of glazewm.currentWorkspaces) {
+          <button class="workspace" id="{{ workspace.name }}">
+            <i class="nf {{ workspace.hasFocus? 'nf-cod-circle_filled' : 'nf-cod-circle' }}"></i>
           </button>
         }
 

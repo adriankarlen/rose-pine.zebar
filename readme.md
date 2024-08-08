@@ -11,14 +11,19 @@
     </a>
 </p>
 
-## Usage
+## Getting started
 
 > NOTE: Replace font with your desired font, I am using SF Mono in the picture.
 > The height of the window is a bit wonky with Windows zoom levels. So play
 > around with it to make it work for you.
 
+Go to the directory for the window manager you are using (eg. GlazeWM or
+Komorebi), copy the config.yaml to your zebar cinfog directory.
+
 In `config.yaml` replace the following section with your desired variables, eg.
 main, moon or dawn, defaults to main. Colors are also configurable.
+
+> For GlazeWM users make sure you have the script.js added to your config dir.
 
 ```css
 --text: var(--rp-text);
