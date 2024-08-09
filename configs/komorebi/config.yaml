@@ -73,7 +73,9 @@ window/bar:
       --memory: var(--rp-iris);
       --cpu: var(--rp-rose);
       --cpu-high-usage: var(--rp-love);
-      --battery: var(--rp-foam);
+      --battery-good: var(--rp-foam);
+      --battery-mid: var(rp-gold);
+      --battery-low: var(--rp-low);
       --ws-1: var(--rp-love);
       --ws-2: var(--rp-gold);
       --ws-3: var(--rp-rose);
@@ -145,6 +147,10 @@ window/bar:
 
         .high-usage {
           color: var(--cou-high-use);
+
+          > i {
+            animation: flash 1s infinite;
+          }
         }
       template: |
         <div class={{cpu.usage > 85 && 'high-usage'}}>
@@ -155,11 +161,22 @@ window/bar:
     template/battery:
       providers: ["battery"]
       styles: |
-        color: var(--battery);
+        color: var(--battery-good);
 
-      template: |
-        <i class="ti ti-bolt"></i> 
-        {{ Math.round(battery.chargePercent) }}%
+        .critical {
+          color: var(--battery-low)
+          > i {
+            animation: flash 1s infinite;
+          }
+        }
+
+        .low {
+          color: var(--battery-low)
+        }
+
+        .mid {
+          color: var(--battery-mid)
+        }
 
   group/center:
     styles: |
