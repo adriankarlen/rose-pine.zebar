@@ -73,7 +73,9 @@ window/bar:
       --memory: var(--rp-iris);
       --cpu: var(--rp-rose);
       --cpu-high-usage: var(--rp-love);
-      --battery: var(--rp-foam);
+      --battery-good: var(--rp-foam);
+      --battery-mid: var(rp-gold);
+      --battery-low: var(--rp-low);
       --ws-1: var(--rp-love);
       --ws-2: var(--rp-gold);
       --ws-3: var(--rp-rose);
@@ -109,6 +111,11 @@ window/bar:
         margin: 4px;
         display: flex;
         align-items: center;
+
+        div {
+          display: flex;
+          align-items: center;
+        }
       }
 
       #memory, #cpu, #battery {
@@ -145,6 +152,10 @@ window/bar:
 
         .high-usage {
           color: var(--cou-high-use);
+
+          > i {
+            animation: flash 1s infinite;
+          }
         }
       template: |
         <div class={{cpu.usage > 85 && 'high-usage'}}>
@@ -155,17 +166,42 @@ window/bar:
     template/battery:
       providers: ["battery"]
       styles: |
-        color: var(--battery);
+        color: var(--battery-good);
+
+        .critical {
+          color: var(--battery-low)
+          > i {
+            animation: flash 1s infinite;
+          }
+        }
+
+        .low {
+          color: var(--battery-low)
+        }
+
+        .mid {
+          color: var(--battery-mid)
+        }
 
       template: |
-        <i class="ti ti-bolt"></i> 
-        {{ Math.round(battery.chargePercent) }}%
+        <div class="
+          @if (battery.chargePercent < 10) {
+            critical
+          } @else if (battery.chargePercent < 25) {
+            low
+          } @else if (battery.chargePercent < 75) {
+            mid
+          }
+        ">
+          <i class="ti ti-bolt"></i>
+          {{ Math.round(battery.chargePercent) }}%
+        </div>
 
   group/center:
     styles: |
       justify-self: center;
 
-    template/komorebi:
+    template/glazewm:
       styles: |
         height: 40px;
         display: flex;
