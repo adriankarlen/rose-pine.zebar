@@ -74,8 +74,8 @@ window/bar:
       --cpu: var(--rp-rose);
       --cpu-high-usage: var(--rp-love);
       --battery-good: var(--rp-foam);
-      --battery-mid: var(rp-gold);
-      --battery-low: var(--rp-low);
+      --battery-mid: var(--rp-gold);
+      --battery-low: var(--rp-love);
       --ws-1: var(--rp-love);
       --ws-2: var(--rp-gold);
       --ws-3: var(--rp-rose);
@@ -83,6 +83,12 @@ window/bar:
       --ws-5: var(--rp-foam);
       --ws-6: var(--rp-iris);
       --weather: var(--rp-gold);
+    }
+
+    @keyframes flash {
+        from { opacity: 1.0; }
+        50% { opacity: 0.5; }
+        to { opacity: 1.0; }
     }
 
   styles: |
@@ -146,14 +152,11 @@ window/bar:
         color: var(--cpu);
 
         .high-usage {
-          color: var(--cou-high-use);
-
-          > i {
-            animation: flash 1s infinite;
-          }
+          color: var(--cpu-high-usage);
+          animation: flash 0.5s infinite;
         }
       template: |
-        <div class={{cpu.usage > 85 && 'high-usage'}}>
+        <div class={{cpu.usage > 85 ? "high-usage" : ""}}>
           <i class="ti ti-cpu"></i>
           <span>{{ Math.round(cpu.usage) }}%</span>
         </div>
@@ -161,13 +164,9 @@ window/bar:
     template/battery:
       providers: ["battery"]
       styles: |
-        color: var(--battery-good);
-
         .critical {
-          color: var(--battery-low)
-          > i {
-            animation: flash 1s infinite;
-          }
+          color: var(--battery-low);
+          animation: flash 1s infinite;
         }
 
         .low {
@@ -177,6 +176,22 @@ window/bar:
         .mid {
           color: var(--battery-mid)
         }
+
+        .good {
+          color: var(--battery-good);
+        }
+      template: |
+        <div class="
+            @switch (true) {
+              @case (battery.chargePercent > 75) { good }
+              @case (battery.chargePercent > 50) { mid }
+              @case (battery.chargePercent > 25) { low }
+              @default { critical }
+            }
+          ">
+            <i class="ti ti-bolt"></i>
+            {{ Math.round(battery.chargePercent) }}%
+        </div>
 
   group/center:
     styles: |
